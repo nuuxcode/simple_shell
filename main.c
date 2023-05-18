@@ -12,7 +12,7 @@ int main(int ac, char **argv)
 	ssize_t nread;
 	pid_t child_pid = 0;
 	int status = 0;
-	const char prompt[] = "#nuux$ ";
+	const char prompt[] = "#csisfun$ ";
 	char **av = NULL;
 	(void)ac, (void)argv;
 	char *token;
@@ -88,3 +88,4 @@ int main(int ac, char **argv)
 	}
 	return (0);
 }
+
