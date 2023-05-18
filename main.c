@@ -2,15 +2,12 @@
 
 void free_av(data *d)
 {
-	int i = 0;
+	int i;
 
 	if (!d->av)
 		return;
-	while (d->av[i])
-	{
+	for (i = 0; d->av[i]; i++)
 		free(d->av[i]);
-		i++;
-	}
 	free(d->av);
 }
 
@@ -23,11 +20,10 @@ void handler_sigint(int sig)
 
 int main(int ac, char **argv)
 {
-	data d;
-
-	d.cmd = NULL;
-	d.av = NULL;
-	d.shell_name = argv[0];
+	data d = {
+		.cmd = NULL,
+		.av = NULL,
+		.shell_name = argv[0]};
 	size_t n = 0;
 	ssize_t nread;
 	pid_t child_pid = 0;
