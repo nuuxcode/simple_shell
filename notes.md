@@ -1,3 +1,4 @@
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 Task 1 :
 
 Display a prompt and wait for the user to type a command. A command line always ends with a new line.

@@ -13,7 +13,7 @@ typedef struct
 {
 	char **av;
 	char *cmd;
-	char *shell_name;
+	const char *shell_name;
 } data;
 
 #endif

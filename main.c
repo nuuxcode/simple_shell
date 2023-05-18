@@ -1,13 +1,22 @@
 #include "main.h"
 
+void _fputs(const char *str)
+{
+	while (*str)
+	{
+		write(STDOUT_FILENO, str, 1);
+		str++;
+	}
+}
 void free_av(data *d)
 {
 	int i;
-
 	if (!d->av)
 		return;
+
 	for (i = 0; d->av[i]; i++)
 		free(d->av[i]);
+
 	free(d->av);
 }
 
@@ -15,77 +24,118 @@ void handler_sigint(int sig)
 {
 	const char prompt[] = "\n#csisfun$ ";
 	(void)sig;
-	write(STDOUT_FILENO, prompt, sizeof(prompt));
+	_fputs(prompt);
 }
 
-int main(int ac, char **argv)
+void token_cmd(data *d, const char *delim)
 {
-	data d = {
-		.cmd = NULL,
-		.av = NULL,
-		.shell_name = argv[0]};
+	char *token;
+	int tkn_ttl = 0;
+
+	token = strtok(d->cmd, delim);
+	while (token)
+	{
+		d->av = realloc(d->av, (tkn_ttl + 2) * sizeof(char *));
+		if (d->av == NULL)
+		{
+			free_av(d);
+			free(d->cmd);
+			perror(d->shell_name);
+			exit(EXIT_FAILURE);
+		}
+		d->av[tkn_ttl] = strdup(token);
+		tkn_ttl++;
+		token = strtok(NULL, delim);
+	}
+
+	d->av[tkn_ttl] = NULL;
+}
+
+void exec_cmd(data *d)
+{
+	pid_t child_pid = fork();
+	int status = 0;
+
+	if (child_pid == -1)
+	{
+		perror(d->shell_name);
+		free_av(d);
+		free(d->cmd);
+		exit(EXIT_FAILURE);
+	}
+	else if (child_pid == 0)
+	{
+		if (execvp(d->av[0], d->av) == -1)
+		{
+			perror(d->shell_name);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		wait(&status);
+	}
+}
+
+void read_cmd(data *d)
+{
 	size_t n = 0;
 	ssize_t nread;
-	pid_t child_pid = 0;
-	int status = 0, tkn_ttl = 0;
+
+	nread = getline(&d->cmd, &n, stdin);
+
+	if (nread == -1)
+	{
+		free(d->cmd);
+		free(d->av);
+		exit(EXIT_FAILURE);
+	}
+
+	d->cmd[nread - 1] = '\0';
+}
+
+void init_data(data *d, const char *shell_name)
+{
+	d->cmd = NULL;
+	d->av = NULL;
+	d->shell_name = shell_name;
+}
+
+void run(data *d)
+{
 	const char prompt[] = "#csisfun$ ";
-	(void)ac, (void)argv;
-	char *token, *delim = " ";
 
 	signal(SIGINT, handler_sigint);
 
 	while (1)
 	{
-		d.av = malloc(2 * sizeof(char *));
-		d.av[0] = NULL;
-		d.av[1] = NULL;
-		write(STDOUT_FILENO, prompt, sizeof(prompt));
-		n = 0;
-		tkn_ttl = 0;
-		nread = getline(&d.cmd, &n, stdin);
+		d->av = malloc(2 * sizeof(char *));
+		d->av[0] = NULL;
+		d->av[1] = NULL;
 
-		if (nread == -1)
-		{
-			free(d.cmd);
-			free(d.av);
-			exit(EXIT_FAILURE);
-		}
+		_fputs(prompt);
 
-		d.cmd[nread - 1] = '\0';
+		read_cmd(d);
 
-		token = strtok(d.cmd, delim);
-		while (token)
-		{
-			d.av = realloc(d.av, (tkn_ttl + 2) * sizeof(char *));
-			if (d.av == NULL)
-			{
-				free_av(&d);
-				free(d.cmd);
-				perror(d.shell_name);
-				exit(EXIT_FAILURE);
-			}
-			d.av[tkn_ttl] = realloc(d.av[tkn_ttl], (strlen(token) + 1) * sizeof(char));
-			strcpy(d.av[tkn_ttl], token);
-			tkn_ttl++;
-			token = strtok(NULL, delim);
-		}
+		token_cmd(d, " ");
 
-		d.av[tkn_ttl] = NULL;
-
-		if (access(d.av[0], F_OK) == -1)
-			perror(d.shell_name);
+		if (access(d->av[0], F_OK) == -1)
+			perror(d->shell_name);
 		else
-		{
-			child_pid = fork();
-			if (child_pid == 0 && execve(d.av[0], d.av, NULL) == -1)
-				perror(d.shell_name);
+			exec_cmd(d);
 
-			wait(&status);
-		}
-
-		free_av(&d);
-		free(d.cmd);
+		free_av(d);
+		free(d->cmd);
 	}
+}
 
-	return (0);
+int main(int ac, char **argv)
+{
+	data d;
+
+	(void)ac;
+	init_data(&d, argv[0]);
+	run(&d);
+
+	return 0;
 }
