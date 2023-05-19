@@ -45,6 +45,10 @@ void split(data *d, const char *delim)
 	char *token;
 	int ntoken = 0;
 
+	d->av = malloc(2 * sizeof(char *));
+	d->av[0] = NULL;
+	d->av[1] = NULL;
+
 	token = strtok(d->cmd, delim);
 	while (token)
 	{
@@ -93,7 +97,6 @@ void read_cmd(data *d)
 	if (nread == -1)
 	{
 		free(d->cmd);
-		free(d->av);
 		exit(EXIT_FAILURE);
 	}
 

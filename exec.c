@@ -60,13 +60,13 @@ void _exec(data *d)
 
 	while (1)
 	{
-		d->av = malloc(2 * sizeof(char *));
-		d->av[0] = NULL;
-		d->av[1] = NULL;
+
 
 		_printf(prompt);
 
 		read_cmd(d);
+
+
 
 		split(d, " ");
 
