@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- * _puts -print a string to stander out put
+ * _printf - print a string to stander out put
  * @str: string input
  * Return: void
  */
-void _puts(const char *str)
+void _printf(const char *str)
 {
 	while (*str)
 	{

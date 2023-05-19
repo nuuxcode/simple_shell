@@ -19,7 +19,7 @@ typedef struct
 /**
  * helpers.c
  */
-void _puts(const char *str);
+void _printf(const char *str);
 void free_array(char **array);
 void split(data *d, const char *delim);
 void init_data(data *d, const char *shell_name);

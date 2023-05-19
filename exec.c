@@ -43,7 +43,7 @@ void handler_sigint(int signal)
 {
 	const char prompt[] = "\n#csisfun$ ";
 	(void)signal;
-	_puts(prompt);
+	_printf(prompt);
 }
 
 /**
@@ -64,7 +64,7 @@ void _exec(data *d)
 		d->av[0] = NULL;
 		d->av[1] = NULL;
 
-		_puts(prompt);
+		_printf(prompt);
 
 		read_cmd(d);
 
