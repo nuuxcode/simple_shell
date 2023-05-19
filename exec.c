@@ -18,20 +18,17 @@ void start_process(data *d)
 		free(d->cmd);
 		exit(EXIT_FAILURE);
 	}
-	else if (child_pid == 0)
+	if (child_pid == 0 && execve(d->av[0], d->av, NULL) == -1)
 	{
-		if (execve(d->av[0], d->av,NULL) == -1)
-		{
-			perror(d->shell_name);
-			exit(EXIT_FAILURE);
-		}
+		perror(d->shell_name);
+		exit(EXIT_FAILURE);
 	}
-	else
+	else if (wait(&status) == -1)
 	{
-		wait(&status);
+		perror(d->shell_name);
+		exit(EXIT_FAILURE);
 	}
 }
-
 
 /**
  * handler_sigint - Signal handler function
@@ -60,13 +57,9 @@ void _exec(data *d)
 
 	while (1)
 	{
-
-
 		_printf(prompt);
 
 		read_cmd(d);
-
-
 
 		split(d, " ");
 
