@@ -9,6 +9,8 @@
 #include <string.h>
 #include <signal.h>
 
+extern char **environ;
+
 /**
  * struct data - holds the main data.
  * @av: Array of tokens to pass for execve
@@ -21,6 +23,22 @@ typedef struct data
 	char *cmd;
 	const char *shell_name;
 } data;
+
+/**
+ * struct builtin - holds the main data.
+ * @cmd: built in cmd
+ * @f: function of builtin cmd
+ */
+typedef struct builtin
+{
+	const char *cmd;
+	void (*f)(data *d);
+} builtin;
+
+/* builtin.c */
+int exec_builtin(data *d);
+void builtin_exit(data *d);
+void builtin_env(void);
 
 /* helpers.c */
 void _printf(const char *str);

@@ -55,6 +55,7 @@ void handler_sigint(int signal)
 
 void _exec(data *d)
 {
+
 	const char prompt[] = "#csisfun$ ";
 
 	signal(SIGINT, handler_sigint);
@@ -67,11 +68,17 @@ void _exec(data *d)
 
 		split(d, " ");
 
-		if (access(d->av[0], F_OK) == -1)
-			perror(d->shell_name);
-		else
-			start_process(d);
-
+		if (!exec_builtin(d))
+		{
+			if (access(d->av[0], F_OK) == -1)
+			{
+				perror(d->shell_name);
+			}
+			else
+			{
+				start_process(d);
+			}
+		}
 		free_array(d->av);
 		free(d->cmd);
 	}
