@@ -21,11 +21,15 @@ void start_process(data *d)
 	if (child_pid == 0 && execve(d->av[0], d->av, NULL) == -1)
 	{
 		perror(d->shell_name);
+		free_array(d->av);
+		free(d->cmd);
 		exit(EXIT_FAILURE);
 	}
 	else if (wait(&status) == -1)
 	{
 		perror(d->shell_name);
+		free_array(d->av);
+		free(d->cmd);
 		exit(EXIT_FAILURE);
 	}
 }
