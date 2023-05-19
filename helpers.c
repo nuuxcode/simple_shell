@@ -97,6 +97,7 @@ void read_cmd(data *d)
 	if (nread == -1)
 	{
 		free(d->cmd);
+		perror(d->shell_name);
 		exit(EXIT_FAILURE);
 	}
 
