@@ -20,7 +20,7 @@ void start_process(data *d)
 	}
 	else if (child_pid == 0)
 	{
-		if (execvp(d->av[0], d->av) == -1)
+		if (execve(d->av[0], d->av) == -1)
 		{
 			perror(d->shell_name);
 			exit(EXIT_FAILURE);
