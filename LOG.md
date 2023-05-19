@@ -4,3 +4,5 @@
 	we finish resources and concept page exercices
 	we read and discuss all tasks with writing note for each one
 	start working on task 1
+# 2023-05-19
+	Refacturing code
