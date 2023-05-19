@@ -61,6 +61,7 @@ void split(data *d, const char *delim)
 		d->av = realloc(d->av, (ntoken + 2) * sizeof(char *));
 		if (d->av == NULL)
 		{
+			free_array(d->av);
 			free(d->cmd);
 			perror(d->shell_name);
 			exit(EXIT_FAILURE);
@@ -68,6 +69,7 @@ void split(data *d, const char *delim)
 		d->av[ntoken] = strdup(token);
 		if (d->av[ntoken] == NULL)
 		{
+			free_array(d->av);
 			free(d->cmd);
 			perror(d->shell_name);
 			exit(EXIT_FAILURE);
