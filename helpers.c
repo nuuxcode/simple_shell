@@ -46,6 +46,12 @@ void split(data *d, const char *delim)
 	int ntoken = 0;
 
 	d->av = malloc(2 * sizeof(char *));
+	if (d->av == NULL)
+	{
+		free(d->cmd);
+		perror(d->shell_name);
+		exit(EXIT_FAILURE);
+	}
 	d->av[0] = NULL;
 	d->av[1] = NULL;
 
@@ -61,6 +67,13 @@ void split(data *d, const char *delim)
 			exit(EXIT_FAILURE);
 		}
 		d->av[ntoken] = strdup(token);
+		if (d->av[ntoken] == NULL)
+		{
+			free_array(d->av);
+			free(d->cmd);
+			perror(d->shell_name);
+			exit(EXIT_FAILURE);
+		}
 		ntoken++;
 		token = strtok(NULL, delim);
 	}
