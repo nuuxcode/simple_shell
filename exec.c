@@ -67,14 +67,15 @@ void _exec(data *d)
 		_printf(prompt);
 
 		read_cmd(d);
+		if (_strlen(d->cmd) != 0)
+		{
+			split(d, " ");
 
-		split(d, " ");
-
-		if (access(d->av[0], F_OK) == -1)
-			perror(d->shell_name);
-		else
-			start_process(d);
-
+			if (access(d->av[0], F_OK) == -1)
+				perror(d->shell_name);
+			else
+					start_process(d);
+		}
 		free_array(d->av);
 		free(d->cmd);
 	}

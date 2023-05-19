@@ -32,4 +32,10 @@ void start_process(data *d);
 void handler_sigint(int sig);
 void _exec(data *d);
 
+/**
+ * string_utils.c
+ */
+unsigned int _strlen(char *str);
+void remove_left_spaces(char *str);
+
 #endif
