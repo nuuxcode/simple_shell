@@ -38,7 +38,7 @@ typedef struct builtin
 /* builtin.c */
 int exec_builtin(data *d);
 void builtin_exit(data *d);
-void builtin_env(void);
+void builtin_env(data *d);
 
 /* helpers.c */
 void _printf(const char *str);

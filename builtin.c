@@ -32,9 +32,13 @@ int exec_builtin(data *d)
  */
 void builtin_exit(data *d)
 {
+	int status = 0;
+
+	if (d->av[1])
+		status = atoi(d->av[1]);
 	free_array(d->av);
 	free(d->cmd);
-	exit(EXIT_FAILURE);
+	exit(status);
 }
 
 /**
@@ -42,12 +46,12 @@ void builtin_exit(data *d)
  * @d: data struct input
  * Return: void
  */
-void builtin_env(void)
+void builtin_env(data *d)
 {
 	char **env = environ;
-
 	int i = 0;
 
+	(void)d;
 	while (env[i])
 	{
 		_printf(env[i]);
