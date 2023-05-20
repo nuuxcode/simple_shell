@@ -17,7 +17,7 @@ char *_getenv(char **env, char *name)
 	if (env == NULL)
 		return (NULL);
 
-	name_len = strlen(name);
+	name_len = _strlen(name);
 
 	while (env[++i])
 	{
@@ -36,7 +36,7 @@ char *_getenv(char **env, char *name)
  */
 int _which(data *d)
 {
-	char *token, *path, *paths = malloc(strlen(_getenv(d->env, "PATH")) + 1);
+	char *token, *path, *paths = malloc(_strlen(_getenv(d->env, "PATH")) + 1);
 	size_t token_len;
 	int find = -1;
 
@@ -46,7 +46,7 @@ int _which(data *d)
 	token = strtok(paths, ":");
 	while (token)
 	{
-		token_len = strlen(token) + strlen(d->av[0]) + 2;
+		token_len = _strlen(token) + _strlen(d->av[0]) + 2;
 		path = malloc(token_len);
 		if (path == NULL)
 			return (find);
