@@ -6,3 +6,4 @@
 	start working on task 1
 # 2023-05-19
 	Refacturing code
+	Handle the PATH
