@@ -1,3 +1,4 @@
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 Task 1 :
 
 Display a prompt and wait for the user to type a command. A command line always ends with a new line.
@@ -171,3 +172,130 @@ setenv
 unsetenv
 cd
 seperator ; && ||
+
+
+pseudo code :
+	Start the shell program.
+	Initialize the necessary data structures and variables.
+	Set up a signal handler to handle the SIGINT signal (Ctrl+C).
+	Enter a loop to continuously read commands and execute them.
+	Display the shell prompt.
+	Read the command input from the user.
+	Split the command into individual tokens based on whitespace or a specified delimiter.
+	Check if the command is a valid executable file by using the access function.
+	If the command does not exist, display an error message.
+	If the command exists, fork a new process using the fork system call.
+	In the child process, use execve to replace the child process with the specified command.
+	If execve returns an error, display an error message.
+	In the parent process, wait for the child process to complete using the wait system call.
+	If an error occurs while waiting, display an error message.
+	Free the allocated memory for the command tokens.
+	Repeat the loop to read and execute the next command.
+flowchart:
++--------------+
+|  Start Shell |
++--------------+
+        |
+        V
++------------------+
+| Initialize Data  |
++------------------+
+        |
+        V
++----------------------+
+| Set Up Signal Handler |
++----------------------+
+        |
+        V
++------------------------------------+
+|          Enter Loop                 |
+|  +-----------------------------+   |
+|  |     Display Shell Prompt     |   |
+|  +-----------------------------+   |
+|              |                     |
+|              V                     |
+|  +-----------------------------+   |
+|  |   Read Command Input        |   |
+|  +-----------------------------+   |
+|              |                     |
+|              V                     |
+|  +-----------------------------+   |
+|  |  Split Command into Tokens  |   |
+|  +-----------------------------+   |
+|              |                     |
+|              V                     |
+|  +-----------------------------+   |
+|  |  Check Command Validity     |   |
+|  +-----------------------------+   |
+|              |                     |
+|        +-----+-----+               |
+|        V           |               |
+|  +---------------+ |               |
+|  |   Command     | |               |
+|  |   Does Not    | |               |
+|  |   Exist       | |               |
+|  +---------------+ |               |
+|              |     |               |
+|        +-----+-----+               |
+|        V           |               |
+|  +-----------------------------+   |
+|  |  Fork New Process           |   |
+|  +-----------------------------+   |
+|              |                     |
+|        +-----+-----+               |
+|        V           |               |
+|  +---------------+ |               |
+|  |   Child       | |               |
+|  |   Process     | |               |
+|  +---------------+ |               |
+|              |     |               |
+|        +-----+-----+               |
+|        V           |               |
+|  +-----------------------------+   |
+|  |  Execute Command            |   |
+|  +-----------------------------+   |
+|              |                     |
+|        +-----+-----+               |
+|        V           |               |
+|  +---------------+ |               |
+|  |   Error       | |               |
+|  |   Occurred    | |               |
+|  +---------------+ |               |
+|              |     |               |
+|        +-----+-----+               |
+|        V           |               |
+|  +-----------------------------+   |
+|  |  Parent       | |               |
+|  |  Process      | |               |
+|  +-----------------------------+   |
+|              |                     |
+|              V                     |
+|  +-----------------------------+   |
+|  |  Wait for Child Process     |   |
+|  +-----------------------------+   |
+|              |                     |
+|        +-----+-----+               |
+|        V           |               |
+|  +---------------+ |               |
+|  |   Error       | |               |
+|  |   Occurred    | |               |
+|  +---------------+ |               |
+|              |     |               |
+|        +-----+-----+               |
+|        V           |               |
+|  +-----------------------------+   |
+|  |  Free Memory                |   |
+|  +-----------------------------+   |
+|              |                     |
+|              V                     |
++--------------+                     |
+        |                             |
+        V                             |
++-----------------+                   |
+|    Repeat Loop  |                   |
++-----------------+                   |
+        |                             |
+        V                             |
++--------------+                     |
+|   End Shell   |                     |
++--------------+                     |
