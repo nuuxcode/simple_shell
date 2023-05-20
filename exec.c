@@ -20,7 +20,7 @@ void start_process(data *d)
 	}
 	else if (child_pid == 0)
 	{
-		if (execve(d->av[0], d->av) == -1)
+		if (execve(d->av[0], d->av, NULL) == -1)
 		{
 			perror(d->shell_name);
 			exit(EXIT_FAILURE);
@@ -70,11 +70,11 @@ void _exec(data *d)
 		if (_strlen(d->cmd) != 0)
 		{
 			split(d, " ");
-
+			_which(d);
 			if (access(d->av[0], F_OK) == -1)
 				perror(d->shell_name);
 			else
-					start_process(d);
+				start_process(d);
 		}
 		free_array(d->av);
 		free(d->cmd);

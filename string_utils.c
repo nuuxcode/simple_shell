@@ -31,5 +31,5 @@ void remove_left_spaces(char *str)
 	{
 		str[j] = str[i];
 	}
-    str[j] = '\0';
+	str[j] = '\0';
 }
