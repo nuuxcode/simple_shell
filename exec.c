@@ -12,26 +12,17 @@ void start_process(data *d)
 	int status = 0;
 
 	if (child_pid == -1)
-	{
-		perror(d->shell_name);
-		free_array(d->av);
-		free(d->cmd);
-		exit(EXIT_FAILURE);
-	}
+		goto free;
 	if (child_pid == 0 && execve(d->av[0], d->av, NULL) == -1)
-	{
-		perror(d->shell_name);
-		free_array(d->av);
-		free(d->cmd);
-		exit(EXIT_FAILURE);
-	}
+		goto free;
 	else if (wait(&status) == -1)
-	{
-		perror(d->shell_name);
-		free_array(d->av);
-		free(d->cmd);
-		exit(EXIT_FAILURE);
-	}
+		goto free;
+	return;
+free:
+	perror(d->shell_name);
+	free_array(d->av);
+	free(d->cmd);
+	exit(EXIT_FAILURE);
 }
 
 /**

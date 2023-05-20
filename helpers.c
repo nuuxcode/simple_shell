@@ -62,24 +62,20 @@ void split(data *d, const char *delim)
 	{
 		d->av = realloc(d->av, (ntoken + 2) * sizeof(char *));
 		if (d->av == NULL)
-		{
-			free_array(d->av);
-			free(d->cmd);
-			perror(d->shell_name);
-			exit(EXIT_FAILURE);
-		}
+			goto free;
 		d->av[ntoken] = strdup(token);
 		if (d->av[ntoken] == NULL)
-		{
-			free_array(d->av);
-			free(d->cmd);
-			perror(d->shell_name);
-			exit(EXIT_FAILURE);
-		}
+			goto free;
 		ntoken++;
 		token = strtok(NULL, delim);
 	}
 	d->av[ntoken] = NULL;
+	return;
+free:
+	free_array(d->av);
+	free(d->cmd);
+	perror(d->shell_name);
+	exit(EXIT_FAILURE);
 }
 
 /**

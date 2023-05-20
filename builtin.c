@@ -48,13 +48,12 @@ void builtin_exit(data *d)
  */
 void builtin_env(data *d)
 {
-	char **env = environ;
 	int i = 0;
 
 	(void)d;
-	while (env[i])
+	while (environ[i])
 	{
-		_printf(env[i]);
+		_printf(environ[i]);
 		_printf("\n");
 		i++;
 	}
