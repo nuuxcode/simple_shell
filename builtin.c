@@ -10,11 +10,11 @@ int exec_builtin(data *d)
 	builtin builtin[] = {
 		{"exit", builtin_exit},
 		{"env", builtin_env},
+		{NULL, NULL},
 	};
-	size_t i;
-	size_t nbuiltin = sizeof(builtin) / sizeof(builtin[0]);
+	int i = 0;
 
-	for (i = 0; i < nbuiltin; i++)
+	for (i = 0; builtin[i].cmd; i++)
 	{
 		if (strcmp(d->av[0], builtin[i].cmd) == 0)
 		{
