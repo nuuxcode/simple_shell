@@ -99,6 +99,7 @@ void read_cmd(data *d)
 {
 	size_t n = 0;
 	ssize_t nread;
+	int i = 0;
 
 	nread = getline(&d->cmd, &n, stdin);
 
@@ -109,4 +110,14 @@ void read_cmd(data *d)
 	}
 
 	d->cmd[nread - 1] = '\0';
+	remove_left_spaces(d->cmd);
+	/* replace hashtag with end of line we can also do it with strtok*/
+	for (i = 0; d->cmd[i] != '\0'; i++)
+	{
+		if (d->cmd[i] == '#')
+		{
+			d->cmd[i] = '\0';
+			break;
+		}
+	}
 }

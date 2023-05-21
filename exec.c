@@ -35,8 +35,9 @@ free:
 
 void handler_sigint(int signal)
 {
-	/*const char prompt[] = "\n#csisfun$ ";*/
+	/*const char prompt[] = PROMPT;*/
 	(void)signal;
+	exit(EXIT_FAILURE);
 	/*_printf(prompt);*/
 }
 
@@ -49,30 +50,33 @@ void handler_sigint(int signal)
 void _exec(data *d)
 {
 
-	const char prompt[] = "#csisfun$ ";
+	const char prompt[] = PROMPT;
 
-	/*signal(SIGINT, handler_sigint);*/
+	signal(SIGINT, handler_sigint);
 
 	while (1)
 	{
 		_printf(prompt);
 
 		read_cmd(d);
-
-		split(d, " ");
-
-		if (!exec_builtin(d))
+		if (_strlen(d->cmd) != 0)
 		{
-			if (access(d->av[0], F_OK) == -1)
+			split(d, " ");
+
+			if (!exec_builtin(d))
 			{
-				perror(d->shell_name);
+				_which(d);
+				if (access(d->av[0], F_OK) == -1)
+				{
+					perror(d->shell_name);
+				}
+				else
+				{
+					start_process(d);
+				}
 			}
-			else
-			{
-				start_process(d);
-			}
+			free_array(d->av);
+			free(d->cmd);
 		}
-		free_array(d->av);
-		free(d->cmd);
 	}
 }

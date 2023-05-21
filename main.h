@@ -1,6 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+
+#define PROMPT "#csisfun$ "
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,7 +13,6 @@
 #include <signal.h>
 
 extern char **environ;
-
 /**
  * struct data - holds the main data.
  * @av: Array of tokens to pass for execve
@@ -59,5 +61,9 @@ unsigned int _strlen(char *str);
 void remove_left_spaces(char *str);
 int _isdigit(int c);
 int _isnumber(const char *status);
+
+/* path.c*/
+char *_getenv(char *name);
+int _which(data *d);
 
 #endif
