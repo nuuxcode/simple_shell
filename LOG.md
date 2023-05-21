@@ -13,3 +13,10 @@
 # 2023-05-19
 	Refacturing code
 	working on builtin starting with exit
+	add handle arguments for the built-in exit
+	add builtin, exit, env
+	add some error handling cases
+	clean code and betty
+# 2023-05-20
+	betty
+	clean and refactor code

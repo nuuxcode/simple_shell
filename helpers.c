@@ -21,7 +21,6 @@ void _printf(const char *str)
  * @array: array of pointers
  * Return: void
  */
-
 void free_array(char **array)
 {
 	int i;
@@ -41,7 +40,6 @@ void free_array(char **array)
  * @delim: string input
  * Return: void
  */
-
 void split(data *d, const char *delim)
 {
 	char *token;
@@ -84,12 +82,12 @@ free:
  * @shell_name: string input
  * Return: void
  */
-
 void init_data(data *d, const char *shell_name)
 {
 	d->cmd = NULL;
 	d->av = NULL;
 	d->shell_name = shell_name;
+	d->last_exit_status = EXIT_SUCCESS;
 }
 
 /**
@@ -97,7 +95,6 @@ void init_data(data *d, const char *shell_name)
  * @d: data struct input
  * Return: void
  */
-
 void read_cmd(data *d)
 {
 	size_t n = 0;

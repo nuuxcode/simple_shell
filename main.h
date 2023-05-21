@@ -16,12 +16,14 @@ extern char **environ;
  * @av: Array of tokens to pass for execve
  * @cmd: The user input, the command line
  * @shell_name: The name of the shell program
+ * @last_exit_status: last exit status of last command executed
  */
 typedef struct data
 {
 	char **av;
 	char *cmd;
 	const char *shell_name;
+	int last_exit_status;
 } data;
 
 /**
@@ -51,5 +53,11 @@ void read_cmd(data *d);
 void start_process(data *d);
 void handler_sigint(int sig);
 void _exec(data *d);
+
+/* string_utils.c*/
+unsigned int _strlen(char *str);
+void remove_left_spaces(char *str);
+int _isdigit(int c);
+int _isnumber(const char *status);
 
 #endif

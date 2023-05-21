@@ -17,6 +17,8 @@ void start_process(data *d)
 		goto free;
 	else if (wait(&status) == -1)
 		goto free;
+	if (WIFEXITED(status))
+		d->last_exit_status = WEXITSTATUS(status);
 	return;
 free:
 	perror(d->shell_name);
@@ -33,9 +35,9 @@ free:
 
 void handler_sigint(int signal)
 {
-	const char prompt[] = "\n#csisfun$ ";
+	/*const char prompt[] = "\n#csisfun$ ";*/
 	(void)signal;
-	_printf(prompt);
+	/*_printf(prompt);*/
 }
 
 /**
@@ -49,7 +51,7 @@ void _exec(data *d)
 
 	const char prompt[] = "#csisfun$ ";
 
-	signal(SIGINT, handler_sigint);
+	/*signal(SIGINT, handler_sigint);*/
 
 	while (1)
 	{
