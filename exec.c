@@ -56,13 +56,13 @@ void _exec(data *d)
 
 	while (1)
 	{
-		_printf(prompt);
+		if (isatty(STDIN_FILENO))
+			_printf(prompt);
 
 		read_cmd(d);
 		if (_strlen(d->cmd) != 0)
 		{
 			split(d, " ");
-
 			if (!exec_builtin(d))
 			{
 				_which(d);

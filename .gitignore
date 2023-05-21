@@ -1,4 +1,9 @@
 # Ignore all files
-hsh
-ctrlc_test
-exit_test
+*
+
+# Except for .c and .h files
+!*.c
+!*.h
+!*.md
+!.gitignore
+!AUTHORS

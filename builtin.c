@@ -10,6 +10,8 @@ int exec_builtin(data *d)
 	builtin builtin[] = {
 		{"exit", builtin_exit},
 		{"env", builtin_env},
+		{"setenv", builtin_setenv},
+		{"unsetenv", builtin_unsetenv},
 		{NULL, NULL},
 	};
 	int i = 0;
@@ -55,4 +57,35 @@ void builtin_env(data *d)
 		_printf("\n");
 		i++;
 	}
+}
+/**
+ * builtin_setenv - Initialize a new environment variable,
+ * or modify an existing one
+ * @d: data struct input
+ * Return: void
+ */
+void builtin_setenv(data *d)
+{
+
+	(void)d;
+}
+/**
+ * builtin_unsetenv - Remove an environment variable
+ * @d: data struct input
+ * Return: void
+ */
+void builtin_unsetenv(data *d)
+{
+	int i, j;
+
+	(void)d;
+	if (!d->av[1] || !getenv(d->av[1]))
+	{
+		_perror(d->shell_name, "variable not found.");
+		return;
+	}
+	for (i = 0; environ[i]; i++)
+		if ((strncmp(environ[i], d->av[1], strlen(d->av[1])) == 0))
+			for (j = i; environ[j]; j++)
+				environ[j] = environ[j + 1];
 }

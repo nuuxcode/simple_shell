@@ -13,14 +13,11 @@ char *_getenv(char *name)
 
 	if (name == NULL || *name == '\0')
 		return (NULL);
-	if (environ == NULL)
-		return (NULL);
-
 	name_len = _strlen(name);
 
 	while (environ[++i])
 	{
-		if (strncmp(environ[i], name, name_len) == 0)
+		if (strncmp(environ[i], name, name_len) == 0 && environ[i][name_len] == '=')
 		{
 			return (environ[i] + name_len + 1);
 		}
