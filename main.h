@@ -67,5 +67,6 @@ int _which(data *d);
 int _strcmp(const char *s1, const char *s2);
 int _strncmp(const char *s1, const char *s2, int n);
 char *_strcpy(char *dest, const char *src);
+char *_strcat(char *dest, const char *src);
 
 #endif

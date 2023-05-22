@@ -115,3 +115,27 @@ char *_strcpy(char *dest, const char *src)
 	dest[len] = '\0';
 	return (dest);
 }
+
+/**
+ * _strcat - appends the src string to the dest string,
+ *
+ * @dest: input string
+ * @src: input const string
+ *
+ * Return: void
+ */
+char *_strcat(char *dest, const char *src)
+{
+	int l;
+	int i;
+
+	for (l = 0; dest[l] != '\0'; ++l)
+		;
+
+	for (i = 0; src[i] != '\0'; i++)
+	{
+		dest[i + l] = src[i];
+	}
+
+	return (dest);
+}
