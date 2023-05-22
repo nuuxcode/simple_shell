@@ -96,3 +96,22 @@ int _strncmp(const char *s1, const char *s2, int n)
 	return (res);
 }
 
+/**
+ * _strcpy - copy src to dest .
+ *
+ * @dest: input char *
+ * @src: input const char *
+ *
+ * Return: char *
+ */
+char *_strcpy(char *dest, const char *src)
+{
+	int len;
+
+	for (len = 0; src[len] != '\0'; ++len)
+	{
+		dest[len] = src[len];
+	}
+	dest[len] = '\0';
+	return (dest);
+}

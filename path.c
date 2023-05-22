@@ -41,7 +41,7 @@ int _which(data *d)
 
 	if(!_getenv("PATH"))
 		goto step_out;
-	strcpy(paths, _getenv("PATH"));
+	_strcpy(paths, _getenv("PATH"));
 	if (paths == NULL)
 		goto step_out;
 	token = strtok(paths, ":");
@@ -51,7 +51,7 @@ int _which(data *d)
 		path = malloc(token_len);
 		if (path == NULL)
 			return (find);
-		strcpy(path, token);
+		_strcpy(path, token);
 		strcat(path, "/");
 		strcat(path,  d->av[0]);
 		if (access(path, F_OK) == 0)
