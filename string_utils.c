@@ -15,24 +15,6 @@ unsigned int _strlen(char *str)
 	return (i);
 }
 
-/**
- * remove_left_spaces - remove leading spaces from a character string
- * @str: string input
- * Return: void.
- */
-
-void remove_left_spaces(char *str)
-{
-	int i, j, len = _strlen(str);
-
-	for (i = 0; i < len && str[i] == ' '; i++)
-		;
-	for (j = 0; i < len ; i++, j++)
-	{
-		str[j] = str[i];
-	}
-	str[j] = '\0';
-}
 
 /**
  * _strcmp - compares two strings.
@@ -84,7 +66,7 @@ int _strncmp(const char *s1, const char *s2, int n)
 	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
 	{
 
-		if (i >= n )
+		if (i >= n)
 			break;
 		if (s1[i] != s2[i])
 		{
