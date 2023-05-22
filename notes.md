@@ -299,3 +299,36 @@ flowchart:
 +--------------+                     |
 |   End Shell   |                     |
 +--------------+                     |
+
+
+--
+
+setenv pseudo code
+
+make copy of environ
+check if name exist or not
+	if it doesnt exist
+			and append to it the new variable
+	if it exist
+			when u reach to the one we want to change, replace the value with new one
+				keep copy the reset
+	make environ point on new environ
+
+
+if variable already exitst : change the value (free all and add name and value)
+if variable doesnt exist : append name and value
+
+
+
+make new value
+
+copy environ
+	check if its the one we want
+		if its :
+			free it
+			strdup new value
+			and keep copying
+
+malloc :
+	new
+	new_environ

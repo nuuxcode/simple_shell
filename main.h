@@ -19,6 +19,7 @@ extern char **environ;
  * @cmd: The user input, the command line
  * @shell_name: The name of the shell program
  * @last_exit_status: last exit status of last command executed
+ * @flag_setenv: 1 if user did exec setenv (use it to free memory)
  */
 typedef struct data
 {
@@ -26,6 +27,7 @@ typedef struct data
 	char *cmd;
 	const char *shell_name;
 	int last_exit_status;
+	int flag_setenv;
 } data;
 
 /**
@@ -70,5 +72,6 @@ int _isnumber(const char *status);
 /* path.c*/
 char *_getenv(char *name);
 int _which(data *d);
+int _setenv(data *d, char *name, char *value);
 
 #endif

@@ -29,7 +29,10 @@ void free_array(char **array)
 		return;
 
 	for (i = 0; array[i]; i++)
+	{
 		free(array[i]);
+		array[i] = NULL;
+	}
 
 	free(array);
 }
@@ -88,6 +91,7 @@ void init_data(data *d, const char *shell_name)
 	d->av = NULL;
 	d->shell_name = shell_name;
 	d->last_exit_status = EXIT_SUCCESS;
+	d->flag_setenv = 0;
 }
 
 /**

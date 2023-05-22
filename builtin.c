@@ -38,6 +38,8 @@ void builtin_exit(data *d)
 		d->last_exit_status = atoi(d->av[1]);
 	free_array(d->av);
 	free(d->cmd);
+	if (d->flag_setenv)
+		free_array(environ);
 	exit(d->last_exit_status);
 }
 
@@ -64,11 +66,19 @@ void builtin_env(data *d)
  * @d: data struct input
  * Return: void
  */
+
 void builtin_setenv(data *d)
 {
-
 	(void)d;
+	if (d->av[1] && d->av[2])
+	{
+		if (_setenv(d, d->av[1], d->av[2]) == -1)
+		{
+			perror("setenv");
+		}
+	}
 }
+
 /**
  * builtin_unsetenv - Remove an environment variable
  * @d: data struct input
@@ -77,6 +87,7 @@ void builtin_setenv(data *d)
 void builtin_unsetenv(data *d)
 {
 	int i, j;
+	int len;
 
 	(void)d;
 	if (!d->av[1] || !getenv(d->av[1]))
@@ -84,8 +95,9 @@ void builtin_unsetenv(data *d)
 		_perror(d->shell_name, "variable not found.");
 		return;
 	}
+	len = strlen(d->av[1]);
 	for (i = 0; environ[i]; i++)
-		if ((strncmp(environ[i], d->av[1], strlen(d->av[1])) == 0))
+		if (strncmp(environ[i], d->av[1], len) == 0 && environ[i][len] == '=')
 			for (j = i; environ[j]; j++)
 				environ[j] = environ[j + 1];
 }
