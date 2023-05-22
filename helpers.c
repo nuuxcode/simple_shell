@@ -7,6 +7,8 @@
  */
 void _printf(const char *str)
 {
+	if (!str)
+		return;
 	while (*str)
 	{
 		write(STDOUT_FILENO, str, 1);
@@ -45,22 +47,35 @@ void split(data *d, const char *delim)
 	char *token;
 	int ntoken = 0;
 
+	d->av = malloc(2 * sizeof(char *));
+	if (d->av == NULL)
+	{
+		free(d->cmd);
+		perror(d->shell_name);
+		exit(EXIT_FAILURE);
+	}
+	d->av[0] = NULL;
+	d->av[1] = NULL;
+
 	token = strtok(d->cmd, delim);
 	while (token)
 	{
 		d->av = realloc(d->av, (ntoken + 2) * sizeof(char *));
 		if (d->av == NULL)
-		{
-			free_array(d->av);
-			free(d->cmd);
-			perror(d->shell_name);
-			exit(EXIT_FAILURE);
-		}
+			goto free;
 		d->av[ntoken] = strdup(token);
+		if (d->av[ntoken] == NULL)
+			goto free;
 		ntoken++;
 		token = strtok(NULL, delim);
 	}
 	d->av[ntoken] = NULL;
+	return;
+free:
+	free_array(d->av);
+	free(d->cmd);
+	perror(d->shell_name);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -95,7 +110,6 @@ void read_cmd(data *d)
 	if (nread == -1)
 	{
 		free(d->cmd);
-		free(d->av);
 		exit(EXIT_FAILURE);
 	}
 

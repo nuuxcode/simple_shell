@@ -9,7 +9,15 @@
 #include <string.h>
 #include <signal.h>
 
-typedef struct
+extern char **environ;
+
+/**
+ * struct data - holds the main data.
+ * @av: Array of tokens to pass for execve
+ * @cmd: The user input, the command line
+ * @shell_name: The name of the shell program
+ */
+typedef struct data
 {
 	char **av;
 	char *cmd;
@@ -18,31 +26,39 @@ typedef struct
 } data;
 
 /**
- * helpers.c
+ * struct builtin - holds the main data.
+ * @cmd: built in cmd
+ * @f: function of builtin cmd
  */
+typedef struct builtin
+{
+	const char *cmd;
+	void (*f)(data *d);
+} builtin;
+
+/* builtin.c */
+int exec_builtin(data *d);
+void builtin_exit(data *d);
+void builtin_env(data *d);
+
+/* helpers.c */
 void _printf(const char *str);
 void free_array(char **array);
 void split(data *d, const char *delim);
 void init_data(data *d, const char *shell_name, char **env);
 void read_cmd(data *d);
 
-/**
- * exec.c
- */
+/* exec.c */
 void start_process(data *d);
 void handler_sigint(int sig);
 void _exec(data *d);
 
-/**
- * string_utils.c
- */
+/* string_utils.c */
 unsigned int _strlen(char *str);
 void remove_left_spaces(char *str);
 
 
-/**
- * path.c
- */
+/* path.c */
 
 char *_getenv(char **env, char *name);
 int _which(data *d);
