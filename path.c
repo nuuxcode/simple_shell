@@ -53,7 +53,7 @@ int _which(data *d)
 		strcpy(path, token);
 		strcat(path, "/");
 		strcat(path,  d->av[0]);
-		if (access(path, X_OK) == 0)
+		if (access(path, F_OK) == 0)
 		{
 			free(d->av[0]);
 			d->av[0] = strdup(path);
