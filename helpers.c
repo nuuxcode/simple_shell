@@ -60,10 +60,10 @@ void split(data *d, const char *delim)
 	token = strtok(d->cmd, delim);
 	while (token)
 	{
-		d->av = realloc(d->av, (ntoken + 2) * sizeof(char *));
+		d->av = _realloc(d->av, (ntoken + 2) * sizeof(char *));
 		if (d->av == NULL)
 			goto free;
-		d->av[ntoken] = strdup(token);
+		d->av[ntoken] = _strdup(token);
 		if (d->av[ntoken] == NULL)
 			goto free;
 		ntoken++;
@@ -112,4 +112,5 @@ void read_cmd(data *d)
 	}
 
 	d->cmd[nread - 1] = '\0';
+	remove_left_spaces(d->cmd);
 }

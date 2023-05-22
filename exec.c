@@ -61,6 +61,7 @@ void _exec(data *d)
 
 		if (!exec_builtin(d))
 		{
+			_which(d);
 			if (access(d->av[0], F_OK) == -1)
 			{
 				perror(d->shell_name);

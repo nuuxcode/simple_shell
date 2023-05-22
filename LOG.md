@@ -12,4 +12,6 @@
 	handle error
 # 2023-05-19
 	Refacturing code
+	Handle the PATH
 	working on builtin starting with exit
+	Rebuild unauthorized functions
