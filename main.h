@@ -22,7 +22,6 @@ typedef struct data
 	char **av;
 	char *cmd;
 	const char *shell_name;
-	char **env;
 } data;
 
 /**
@@ -45,7 +44,7 @@ void builtin_env(data *d);
 void _printf(const char *str);
 void free_array(char **array);
 void split(data *d, const char *delim);
-void init_data(data *d, const char *shell_name, char **env);
+void init_data(data *d, const char *shell_name);
 void read_cmd(data *d);
 
 /* exec.c */
@@ -60,7 +59,7 @@ void remove_left_spaces(char *str);
 
 /* path.c */
 
-char *_getenv(char **env, char *name);
+char *_getenv(char *name);
 int _which(data *d);
 
 #endif

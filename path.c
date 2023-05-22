@@ -3,27 +3,26 @@
 /**
  * _getenv - retrieves the value of an environment variable.
  * @name: string input
- * @env: environment variable
  * Return: value of an environment variable
  */
 
-char *_getenv(char **env, char *name)
+char *_getenv(char *name)
 {
 	int i = -1;
 	size_t name_len;
 
 	if (name == NULL || *name == '\0')
 		return (NULL);
-	if (env == NULL)
+	if (environ == NULL)
 		return (NULL);
 
 	name_len = _strlen(name);
 
-	while (env[++i])
+	while (environ[++i])
 	{
-		if (strncmp(env[i], name, name_len) == 0)
+		if (strncmp(environ[i], name, name_len) == 0)
 		{
-			return (env[i] + name_len + 1);
+			return (environ[i] + name_len + 1);
 		}
 	}
 	return (NULL);
@@ -36,11 +35,11 @@ char *_getenv(char **env, char *name)
  */
 int _which(data *d)
 {
-	char *token, *path, *paths = malloc(_strlen(_getenv(d->env, "PATH")) + 1);
+	char *token, *path, *paths = malloc(_strlen(_getenv("PATH")) + 1);
 	size_t token_len;
 	int find = -1;
 
-	strcpy(paths, _getenv(d->env, "PATH"));
+	strcpy(paths, _getenv("PATH"));
 	if (paths == NULL)
 		return (find);
 	token = strtok(paths, ":");

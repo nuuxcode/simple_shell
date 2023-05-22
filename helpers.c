@@ -82,16 +82,14 @@ free:
  * init_data - init data
  * @d: data struct input
  * @shell_name: string input
- * @env: environment variable
  * Return: void
  */
 
-void init_data(data *d, const char *shell_name, char **env)
+void init_data(data *d, const char *shell_name)
 {
 	d->cmd = NULL;
 	d->av = NULL;
 	d->shell_name = shell_name;
-	d->env = env;
 }
 
 /**
