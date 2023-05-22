@@ -126,16 +126,18 @@ char *_strcpy(char *dest, const char *src)
  */
 char *_strcat(char *dest, const char *src)
 {
-	int l;
-	int i;
+	char *result = dest;
 
-	for (l = 0; dest[l] != '\0'; ++l)
-		;
+	while (*dest != '\0')
+		dest++;
 
-	for (i = 0; src[i] != '\0'; i++)
+	while (*src != '\0')
 	{
-		dest[i + l] = src[i];
+		*dest = *src;
+		dest++;
+		src++;
 	}
+	*dest = '\0';
 
-	return (dest);
+	return (result);
 }
