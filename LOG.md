@@ -14,3 +14,4 @@
 	Refacturing code
 	Handle the PATH
 	working on builtin starting with exit
+	Rebuild unauthorized functions
