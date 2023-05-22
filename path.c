@@ -35,11 +35,12 @@ char *_getenv(char *name)
  */
 int _which(data *d)
 {
-	char *token, *path, *paths = malloc(_strlen(_getenv("PATH") ? _getenv("PATH") : "") + 1);
+	char *token, *path,
+		*paths = malloc(_strlen(_getenv("PATH") ? _getenv("PATH") : "") + 1);
 	size_t token_len;
 	int find = -1;
 
-	if(!_getenv("PATH"))
+	if (!_getenv("PATH"))
 		goto step_out;
 	_strcpy(paths, _getenv("PATH"));
 	if (paths == NULL)
@@ -65,7 +66,7 @@ int _which(data *d)
 		free(path);
 		token = strtok(NULL, ":");
 	}
-	step_out:
+step_out:
 	free(paths);
 	return (find);
 }
