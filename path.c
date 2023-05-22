@@ -58,7 +58,7 @@ int _which(data *d)
 		if (access(path, F_OK) == 0)
 		{
 			free(d->av[0]);
-			d->av[0] = strdup(path);
+			d->av[0] = _strdup(path);
 			free(path);
 			find = 0;
 			break;
