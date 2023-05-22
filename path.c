@@ -20,7 +20,7 @@ char *_getenv(char *name)
 
 	while (environ[++i])
 	{
-		if (!strncmp(environ[i], name, name_len) && environ[i][name_len] == '=')
+		if (!_strncmp(environ[i], name, name_len) && environ[i][name_len] == '=')
 		{
 			return (environ[i] + name_len + 1);
 		}

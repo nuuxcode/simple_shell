@@ -62,4 +62,9 @@ void remove_left_spaces(char *str);
 char *_getenv(char *name);
 int _which(data *d);
 
+/* string_utils.c */
+
+int _strcmp(const char *s1, const char *s2);
+int _strncmp(const char *s1, const char *s2, int n);
+
 #endif
