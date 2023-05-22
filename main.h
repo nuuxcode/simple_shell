@@ -47,23 +47,21 @@ void split(data *d, const char *delim);
 void init_data(data *d, const char *shell_name);
 void read_cmd(data *d);
 
+/* helpers2.c */
+void _perror(const char *str1, const char *str2)
+void remove_left_spaces(char *str)
+
 /* exec.c */
 void start_process(data *d);
 void handler_sigint(int sig);
 void _exec(data *d);
 
-/* string_utils.c */
-unsigned int _strlen(char *str);
-void remove_left_spaces(char *str);
-
-
 /* path.c */
-
 char *_getenv(char *name);
 int _which(data *d);
 
 /* string_utils.c */
-
+unsigned int _strlen(char *str);
 int _strcmp(const char *s1, const char *s2);
 int _strncmp(const char *s1, const char *s2, int n);
 char *_strcpy(char *dest, const char *src);
