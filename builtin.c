@@ -12,6 +12,7 @@ int exec_builtin(data *d)
 		{"env", builtin_env},
 		{"setenv", builtin_setenv},
 		{"unsetenv", builtin_unsetenv},
+		{"cd", builtin_cd},
 		{NULL, NULL},
 	};
 	int i = 0;
@@ -100,4 +101,30 @@ void builtin_unsetenv(data *d)
 		if (strncmp(environ[i], d->av[1], len) == 0 && environ[i][len] == '=')
 			for (j = i; environ[j]; j++)
 				environ[j] = environ[j + 1];
+}
+
+/**
+ * builtin_cd - change directory
+ * @d: data struct input
+ * Return: void
+ */
+void builtin_cd(data *d)
+{
+	char *dir = d->av[1];
+
+	char cwd[256];
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		perror("getcwd() error");
+	_setenv(d, "PWD", cwd);
+	if (!dir)
+		dir = _getenv("HOME");
+	if (chdir(dir) == -1)
+		perror("cd");
+	else
+	{
+		_setenv(d, "OLDPWD", _getenv("PWD"));
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+			perror("getcwd() error");
+		_setenv(d, "PWD", cwd);
+	}
 }

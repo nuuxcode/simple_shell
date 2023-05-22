@@ -47,6 +47,8 @@ void builtin_exit(data *d);
 void builtin_env(data *d);
 void builtin_setenv(data *d);
 void builtin_unsetenv(data *d);
+void builtin_cd(data *d);
+
 
 /* helpers.c */
 void _printf(const char *str);
