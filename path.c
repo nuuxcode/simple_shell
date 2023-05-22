@@ -20,7 +20,7 @@ char *_getenv(char *name)
 
 	while (environ[++i])
 	{
-		if (strncmp(environ[i], name, name_len) == 0)
+		if (!strncmp(environ[i], name, name_len) && environ[i][name_len] == '=')
 		{
 			return (environ[i] + name_len + 1);
 		}
@@ -35,13 +35,15 @@ char *_getenv(char *name)
  */
 int _which(data *d)
 {
-	char *token, *path, *paths = malloc(_strlen(_getenv("PATH")) + 1);
+	char *token, *path, *paths = malloc(_strlen(_getenv("PATH") ? _getenv("PATH") : "") + 1);
 	size_t token_len;
 	int find = -1;
 
+	if(!_getenv("PATH"))
+		goto step_out;
 	strcpy(paths, _getenv("PATH"));
 	if (paths == NULL)
-		return (find);
+		goto step_out;
 	token = strtok(paths, ":");
 	while (token)
 	{
@@ -63,6 +65,7 @@ int _which(data *d)
 		free(path);
 		token = strtok(NULL, ":");
 	}
+	step_out:
 	free(paths);
 	return (find);
 }
