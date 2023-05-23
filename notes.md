@@ -301,7 +301,6 @@ flowchart:
 +--------------+                     |
 |   End Shell   |                     |
 +--------------+                     |
-<<<<<<< HEAD
 
 
 --
@@ -335,5 +334,3 @@ copy environ
 malloc :
 	new
 	new_environ
-=======
->>>>>>> origin/master
