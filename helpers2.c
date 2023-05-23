@@ -38,7 +38,7 @@ void remove_left_spaces(char *str)
 {
 	int i, j, len = _strlen(str);
 
-	for (i = 0; i < len && str[i] == ' '; i++)
+	for (i = 0; i < len && (str[i] == ' ' || str[i] == '\t'); i++)
 		;
 	for (j = 0; i < len ; i++, j++)
 	{
