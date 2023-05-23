@@ -94,9 +94,10 @@ char *create_new_entry(char *name, char *value)
  */
 char **_new_environ(char *name, char *value)
 {
-	size_t env_len = 0, new_len;
+	size_t env_len = 0;
 	char *new_entry;
 	char **new_environ;
+	int i = 0;
 
 	while (environ[env_len])
 		env_len++;
@@ -111,7 +112,7 @@ char **_new_environ(char *name, char *value)
 		free(new_entry);
 		return (NULL);
 	}
-	for (int i = 0; environ[i]; i++)
+	for (i = 0; environ[i]; i++)
 	{
 		new_environ[i] = malloc(strlen(environ[i]) + 1);
 		if (!new_environ[i])
