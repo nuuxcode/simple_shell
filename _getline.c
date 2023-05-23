@@ -26,7 +26,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 	while (1) {
 			if (bufPos >= bufSize) {
-				bytesRead = read(fileno(stream), buf, READ_BUF_SIZE);
+				bytesRead = read(stream->_fileno, buf, READ_BUF_SIZE);
 				if (bytesRead <= 0) {
 					if (position == 0) {
 						return -1; 
