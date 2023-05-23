@@ -1,6 +1,9 @@
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+<<<<<<< HEAD
 valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck ./hsh
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -g *.c -o hsh
+=======
+>>>>>>> origin/master
 Task 1 :
 
 Display a prompt and wait for the user to type a command. A command line always ends with a new line.
@@ -301,6 +304,7 @@ flowchart:
 +--------------+                     |
 |   End Shell   |                     |
 +--------------+                     |
+<<<<<<< HEAD
 
 
 --
@@ -334,3 +338,5 @@ copy environ
 malloc :
 	new
 	new_environ
+=======
+>>>>>>> origin/master

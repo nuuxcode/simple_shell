@@ -19,7 +19,7 @@ int exec_builtin(data *d)
 
 	for (i = 0; builtin[i].cmd; i++)
 	{
-		if (strcmp(d->av[0], builtin[i].cmd) == 0)
+		if (_strcmp(d->av[0], builtin[i].cmd) == 0)
 		{
 			builtin[i].f(d);
 			return (1);

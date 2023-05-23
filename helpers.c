@@ -61,10 +61,10 @@ void split(data *d, const char *delim)
 	token = strtok(d->cmd, delim);
 	while (token)
 	{
-		d->av = realloc(d->av, (ntoken + 2) * sizeof(char *));
+		d->av = _realloc(d->av, (ntoken + 2) * sizeof(char *));
 		if (d->av == NULL)
 			goto free;
-		d->av[ntoken] = strdup(token);
+		d->av[ntoken] = _strdup(token);
 		if (d->av[ntoken] == NULL)
 			goto free;
 		ntoken++;
@@ -85,6 +85,7 @@ free:
  * @shell_name: string input
  * Return: void
  */
+
 void init_data(data *d, const char *shell_name)
 {
 	d->cmd = NULL;
@@ -105,7 +106,7 @@ void read_cmd(data *d)
 	ssize_t nread;
 	int i = 0;
 
-	nread = getline(&d->cmd, &n, stdin);
+	nread = _getline(&d->cmd, &n, stdin);
 
 	if (nread == -1)
 	{
@@ -114,7 +115,7 @@ void read_cmd(data *d)
 	}
 
 	d->cmd[nread - 1] = '\0';
-	remove_left_spaces(d->cmd);
+	_trim(d->cmd);
 	/* replace hashtag with end of line we can also do it with strtok*/
 	for (i = 0; d->cmd[i] != '\0'; i++)
 	{
@@ -124,4 +125,5 @@ void read_cmd(data *d)
 			break;
 		}
 	}
+	_trim(d->cmd);
 }

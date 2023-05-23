@@ -15,49 +15,111 @@ unsigned int _strlen(char *str)
 	return (i);
 }
 
+
 /**
- * remove_left_spaces - remove leading spaces from a character string
- * @str: string input
- * Return: void.
+ * _strcmp - compares two strings.
+ *
+ * @s1: input const string
+ * @s2: input const string
+ *
+ * Return: returns an integer indicating the result of the comparison,
+ *	as follows:
+ *		• 0, if the s1 and s2 are equal
+ *		• a negative value if s1 is less than s2
+ *		• a positive value if s1 is greater than s2
  */
-
-void remove_left_spaces(char *str)
+int _strcmp(const char *s1, const char *s2)
 {
-	int i, j, len = _strlen(str);
+	int i;
+	int res = 0;
 
-	for (i = 0; i < len && str[i] == ' '; i++)
-		;
-	for (j = 0; i < len; i++, j++)
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
 	{
-		str[j] = str[i];
+		if (s1[i] != s2[i])
+		{
+			res = s1[i] - s2[i];
+			break;
+		}
 	}
-	str[j] = '\0';
+
+	return (res);
 }
 
 /**
- * _isdigit - check if charachter is number
- * @c: charachter
- * Return: 1 if its a digit 0 otherwise
+ * _strncmp - compares two strings.
+ *
+ * @s1: input const string
+ * @s2: input const string
+ * @n: input int
+ *
+ * Return: returns an integer indicating the result of the comparison,
+ *	as follows:
+ *		• 0, if the s1 and s2 are equal
+ *		• a negative value if s1 is less than s2
+ *		• a positive value if s1 is greater than s2
  */
-int _isdigit(int c)
+int _strncmp(const char *s1, const char *s2, int n)
 {
-	return (c >= '0' && c <= '9');
+	int i;
+	int res = 0;
+
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
+	{
+
+		if (i >= n)
+			break;
+		if (s1[i] != s2[i])
+		{
+			res = s1[i] - s2[i];
+			break;
+		}
+	}
+
+	return (res);
 }
 
 /**
- * _isnumber - check if a string is a number
- * @status: string to be checked
+ * _strcpy - copy src to dest .
+ *
+ * @dest: input char *
+ * @src: input const char *
+ *
+ * Return: char *
+ */
+char *_strcpy(char *dest, const char *src)
+{
+	int len;
+
+	for (len = 0; src[len] != '\0'; ++len)
+	{
+		dest[len] = src[len];
+	}
+	dest[len] = '\0';
+	return (dest);
+}
+
+/**
+ * _strcat - appends the src string to the dest string,
+ *
+ * @dest: input string
+ * @src: input const string
+ *
  * Return: void
  */
-int _isnumber(const char *status)
+char *_strcat(char *dest, const char *src)
 {
-	if (status == NULL || status[0] == '\0')
-		return (0);
-	while (*status)
+	char *result = dest;
+
+	while (*dest != '\0')
+		dest++;
+
+	while (*src != '\0')
 	{
-		if (!_isdigit(*status))
-			return (0);
-		status++;
+		*dest = *src;
+		dest++;
+		src++;
 	}
-	return (1);
+	*dest = '\0';
+
+	return (result);
 }

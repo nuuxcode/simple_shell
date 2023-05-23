@@ -13,11 +13,14 @@ char *_getenv(char *name)
 
 	if (name == NULL || *name == '\0')
 		return (NULL);
+	if (environ == NULL)
+		return (NULL);
+
 	name_len = _strlen(name);
 
 	while (environ[++i])
 	{
-		if (strncmp(environ[i], name, name_len) == 0 && environ[i][name_len] == '=')
+		if (!_strncmp(environ[i], name, name_len) && environ[i][name_len] == '=')
 		{
 			return (environ[i] + name_len + 1);
 		}
@@ -32,13 +35,16 @@ char *_getenv(char *name)
  */
 int _which(data *d)
 {
-	char *token, *path, *paths = malloc(_strlen(_getenv("PATH")) + 1);
+	char *token, *path,
+		*paths = malloc(_strlen(_getenv("PATH") ? _getenv("PATH") : "") + 1);
 	size_t token_len;
 	int find = -1;
 
-	strcpy(paths, _getenv("PATH"));
+	if (!_getenv("PATH"))
+		goto step_out;
+	_strcpy(paths, _getenv("PATH"));
 	if (paths == NULL)
-		return (find);
+		goto step_out;
 	token = strtok(paths, ":");
 	while (token)
 	{
@@ -46,13 +52,13 @@ int _which(data *d)
 		path = malloc(token_len);
 		if (path == NULL)
 			return (find);
-		strcpy(path, token);
-		strcat(path, "/");
-		strcat(path, d->av[0]);
-		if (access(path, X_OK) == 0)
+		_strcpy(path, token);
+		_strcat(path, "/");
+		_strcat(path, d->av[0]);
+		if (access(path, F_OK) == 0)
 		{
 			free(d->av[0]);
-			d->av[0] = strdup(path);
+			d->av[0] = _strdup(path);
 			free(path);
 			find = 0;
 			break;
@@ -60,6 +66,7 @@ int _which(data *d)
 		free(path);
 		token = strtok(NULL, ":");
 	}
+step_out:
 	free(paths);
 	return (find);
 }
@@ -94,10 +101,9 @@ char *create_new_entry(char *name, char *value)
  */
 char **_new_environ(char *name, char *value)
 {
-	size_t env_len = 0;
+	int env_len = 0, i = 0;
 	char *new_entry;
 	char **new_environ;
-	int i = 0;
 
 	while (environ[env_len])
 		env_len++;
@@ -105,7 +111,7 @@ char **_new_environ(char *name, char *value)
 	if (new_entry == NULL)
 		return (NULL);
 	new_environ = _getenv(name) ? malloc((env_len + 1) * sizeof(char *))
-	: malloc((env_len + 2) * sizeof(char *));
+								: malloc((env_len + 2) * sizeof(char *));
 
 	if (!new_environ)
 	{
