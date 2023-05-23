@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stddef.h>
 #include <sys/wait.h>
 #include <errno.h>
 #include <string.h>
@@ -49,7 +50,7 @@ void read_cmd(data *d);
 
 /* helpers2.c */
 void _perror(const char *str1, const char *str2);
-void remove_left_spaces(char *str);
+void _trim(char *str);
 void *_realloc(void *ptr, unsigned int new_size);
 
 /* exec.c */
@@ -70,5 +71,11 @@ char *_strcat(char *dest, const char *src);
 
 /* string_utils2.c */
 char *_strdup(const char *str);
+
+/* _getline.c */
+#define READ_BUF_SIZE 1024
+
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 
 #endif

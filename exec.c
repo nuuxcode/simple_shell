@@ -56,19 +56,20 @@ void _exec(data *d)
 		_printf(prompt);
 
 		read_cmd(d);
-
-		split(d, " ");
-
-		if (!exec_builtin(d))
+		if (_strlen(d->cmd) != 0)
 		{
-			_which(d);
-			if (access(d->av[0], F_OK) == -1)
+			split(d, " ");
+			if (!exec_builtin(d))
 			{
-				perror(d->shell_name);
-			}
-			else
-			{
-				start_process(d);
+				_which(d);
+				if (access(d->av[0], F_OK) == -1)
+				{
+					perror(d->shell_name);
+				}
+				else
+				{
+					start_process(d);
+				}
 			}
 		}
 		free_array(d->av);

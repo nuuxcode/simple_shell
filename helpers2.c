@@ -29,22 +29,25 @@ void _perror(const char *str1, const char *str2)
 
 
 /**
- * remove_left_spaces - remove leading spaces from a character string
+ * _trim - remove leading and trailing spaces and tabs from a string
  * @str: string input
  * Return: void.
  */
 
-void remove_left_spaces(char *str)
+void _trim(char *str)
 {
 	int i, j, len = _strlen(str);
 
-	for (i = 0; i < len && str[i] == ' '; i++)
+	for (i = 0; i < len && (str[i] == ' ' || str[i] == '\t'); i++)
 		;
+
 	for (j = 0; i < len ; i++, j++)
-	{
 		str[j] = str[i];
-	}
+
 	str[j] = '\0';
+
+	for (i = _strlen(str) - 1; i > 0 && (str[i] == ' ' || str[i] == '\t'); i--)
+		str[i] = '\0';
 }
 
 

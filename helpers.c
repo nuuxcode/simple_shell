@@ -103,7 +103,7 @@ void read_cmd(data *d)
 	size_t n = 0;
 	ssize_t nread;
 
-	nread = getline(&d->cmd, &n, stdin);
+	nread = _getline(&d->cmd, &n, stdin);
 
 	if (nread == -1)
 	{
@@ -112,5 +112,5 @@ void read_cmd(data *d)
 	}
 
 	d->cmd[nread - 1] = '\0';
-	remove_left_spaces(d->cmd);
+	_trim(d->cmd);
 }
