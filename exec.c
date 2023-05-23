@@ -49,7 +49,6 @@ void handler_sigint(int signal)
 
 void _exec(data *d)
 {
-
 	const char prompt[] = PROMPT;
 
 	signal(SIGINT, handler_sigint);
