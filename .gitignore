@@ -1,3 +1,9 @@
 # Ignore all files
-hsh
+*
 
+# Except for .c and .h files
+!*.c
+!*.h
+!*.md
+!.gitignore
+!AUTHORS

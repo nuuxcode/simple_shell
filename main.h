@@ -1,6 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+
+#define PROMPT "#csisfun$ "
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,12 +20,16 @@ extern char **environ;
  * @av: Array of tokens to pass for execve
  * @cmd: The user input, the command line
  * @shell_name: The name of the shell program
+ * @last_exit_status: last exit status of last command executed
+ * @flag_setenv: 1 if user did exec setenv (use it to free memory)
  */
 typedef struct data
 {
 	char **av;
 	char *cmd;
 	const char *shell_name;
+	int last_exit_status;
+	int flag_setenv;
 } data;
 
 /**
@@ -40,6 +47,10 @@ typedef struct builtin
 int exec_builtin(data *d);
 void builtin_exit(data *d);
 void builtin_env(data *d);
+void builtin_setenv(data *d);
+void builtin_unsetenv(data *d);
+void builtin_cd(data *d);
+
 
 /* helpers.c */
 void _printf(const char *str);
@@ -61,6 +72,7 @@ void _exec(data *d);
 /* path.c */
 char *_getenv(char *name);
 int _which(data *d);
+int _setenv(data *d, char *name, char *value);
 
 /* string_utils.c */
 unsigned int _strlen(char *str);
@@ -69,8 +81,11 @@ int _strncmp(const char *s1, const char *s2, int n);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 
+
 /* string_utils2.c */
 char *_strdup(const char *str);
+int _isnumber(const char *status);
+int _isdigit(int c);
 
 /* _getline.c */
 #define READ_BUF_SIZE 1024

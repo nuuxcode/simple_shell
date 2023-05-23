@@ -28,3 +28,34 @@ char *_strdup(const char *str)
 
 	return (result);
 }
+
+
+/**
+ * _isnumber - check if a string is a number
+ * @status: string to be checked
+ * Return: void
+ */
+int _isnumber(const char *status)
+{
+	if (status == NULL || status[0] == '\0')
+		return (0);
+	while (*status)
+	{
+		if (!_isdigit(*status))
+			return (0);
+		status++;
+	}
+	return (1);
+}
+
+
+/**
+ * _isdigit - check if charachter is number
+ * @c: charachter
+ * Return: 1 if its a digit 0 otherwise
+ */
+int _isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+

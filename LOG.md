@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 2023-05-10
 	we start
 # 2023-05-16
@@ -14,4 +15,10 @@
 	Refacturing code
 	Handle the PATH
 	working on builtin starting with exit
-	Rebuild unauthorized functions
+	add handle arguments for the built-in exit
+	add builtin, exit, env
+	add some error handling cases
+	clean code and betty
+# 2023-05-20
+	betty
+	clean and refactor code

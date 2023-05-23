@@ -21,7 +21,6 @@ void _printf(const char *str)
  * @array: array of pointers
  * Return: void
  */
-
 void free_array(char **array)
 {
 	int i;
@@ -30,7 +29,10 @@ void free_array(char **array)
 		return;
 
 	for (i = 0; array[i]; i++)
+	{
 		free(array[i]);
+		array[i] = NULL;
+	}
 
 	free(array);
 }
@@ -41,7 +43,6 @@ void free_array(char **array)
  * @delim: string input
  * Return: void
  */
-
 void split(data *d, const char *delim)
 {
 	char *token;
@@ -90,6 +91,8 @@ void init_data(data *d, const char *shell_name)
 	d->cmd = NULL;
 	d->av = NULL;
 	d->shell_name = shell_name;
+	d->last_exit_status = EXIT_SUCCESS;
+	d->flag_setenv = 0;
 }
 
 /**
@@ -97,11 +100,11 @@ void init_data(data *d, const char *shell_name)
  * @d: data struct input
  * Return: void
  */
-
 void read_cmd(data *d)
 {
 	size_t n = 0;
 	ssize_t nread;
+	int i = 0;
 
 	nread = _getline(&d->cmd, &n, stdin);
 
@@ -112,5 +115,15 @@ void read_cmd(data *d)
 	}
 
 	d->cmd[nread - 1] = '\0';
+	_trim(d->cmd);
+	/* replace hashtag with end of line we can also do it with strtok*/
+	for (i = 0; d->cmd[i] != '\0'; i++)
+	{
+		if (d->cmd[i] == '#')
+		{
+			d->cmd[i] = '\0';
+			break;
+		}
+	}
 	_trim(d->cmd);
 }
