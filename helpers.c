@@ -112,5 +112,5 @@ void read_cmd(data *d)
 	}
 
 	d->cmd[nread - 1] = '\0';
-	remove_left_spaces(d->cmd);
+	_trim(d->cmd);
 }

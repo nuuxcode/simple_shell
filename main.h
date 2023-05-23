@@ -50,7 +50,7 @@ void read_cmd(data *d);
 
 /* helpers2.c */
 void _perror(const char *str1, const char *str2);
-void remove_left_spaces(char *str);
+void _trim(char *str);
 void *_realloc(void *ptr, unsigned int new_size);
 
 /* exec.c */
