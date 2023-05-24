@@ -111,7 +111,7 @@ void read_cmd(data *d)
 	if (nread == -1)
 	{
 		free(d->cmd);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 
 	d->cmd[nread - 1] = '\0';
