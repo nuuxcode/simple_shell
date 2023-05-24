@@ -75,7 +75,7 @@ void _exec(data *d)
 				}
 			}
 			free_array(d->av);
-			free(d->cmd);
 		}
+		free(d->cmd);
 	}
 }
