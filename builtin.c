@@ -35,12 +35,19 @@ int exec_builtin(data *d)
  */
 void builtin_exit(data *d)
 {
+	const char *errorString = "./hsh: 1: exit: Illegal number: ";
+
 	if (d->av[1])
 	{
 		if (d->av[1][0] != '-' && _isnumber(d->av[1]))
 			d->last_exit_status = atoi(d->av[1]);
 		else
+		{
+			write(STDERR_FILENO, errorString, strlen(errorString));
+			write(STDERR_FILENO, d->av[1], strlen(d->av[1]));
+			write(STDERR_FILENO, "\n", 1);
 			d->last_exit_status = 2;
+		}
 	}
 	free_array(d->av);
 	free(d->cmd);
