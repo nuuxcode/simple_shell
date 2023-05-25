@@ -35,8 +35,13 @@ int exec_builtin(data *d)
  */
 void builtin_exit(data *d)
 {
-	if (d->av[1] && _isnumber(d->av[1]))
-		d->last_exit_status = atoi(d->av[1]);
+	if (d->av[1])
+	{
+		if (d->av[1][0] != '-' && _isnumber(d->av[1]))
+			d->last_exit_status = atoi(d->av[1]);
+		else
+			d->last_exit_status = 2;
+	}
 	free_array(d->av);
 	free(d->cmd);
 	if (d->flag_setenv)
@@ -102,4 +107,3 @@ void builtin_unsetenv(data *d)
 			for (j = i; environ[j]; j++)
 				environ[j] = environ[j + 1];
 }
-
