@@ -119,7 +119,7 @@ void read_cmd(data *d)
 	/* replace hashtag with end of line we can also do it with strtok*/
 	for (i = 0; d->cmd[i] != '\0'; i++)
 	{
-		if (d->cmd[i] == '#')
+		if (d->cmd[0] == '#' || (d->cmd[i] == '#' && d->cmd[i - 1] == ' '))
 		{
 			d->cmd[i] = '\0';
 			break;
