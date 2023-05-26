@@ -61,7 +61,7 @@ void split(data *d, const char *delim)
 	token = strtok(d->cmd, delim);
 	while (token)
 	{
-		d->av = _realloc(d->av, (ntoken + 2) * sizeof(char *));
+		d->av = realloc(d->av, (ntoken + 2) * sizeof(char *));
 		if (d->av == NULL)
 			goto free;
 		d->av[ntoken] = _strdup(token);
